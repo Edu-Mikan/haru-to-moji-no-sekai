@@ -1,0 +1,1 @@
+enum KanaScript { hiragana, katakana }
