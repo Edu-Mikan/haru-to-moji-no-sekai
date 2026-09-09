@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:haru_to_moji_no_sekai/app/app.dart';
+import 'package:flutter/widgets.dart';
+
+import 'app/app.dart';
 
 void main() {
-  runApp(const HaruToMojiApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(const HaruToMojiNoSekaiApp());
 }

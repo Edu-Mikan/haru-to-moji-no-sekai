@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:haru_to_moji_no_sekai/app/theme/app_theme.dart';
-import 'package:haru_to_moji_no_sekai/features/home/presentation/home_screen.dart';
 
-class HaruToMojiApp extends StatelessWidget {
-  const HaruToMojiApp({super.key});
+import '../features/home/presentation/home_screen.dart';
+import 'app_theme.dart';
+
+class HaruToMojiNoSekaiApp extends StatelessWidget {
+  const HaruToMojiNoSekaiApp({super.key});
+
+  static const String applicationTitle = 'Haru to Moji no Sekai';
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Haru to Moji no Sekai',
+      title: applicationTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const HomeScreen(),
+      home: HomeScreen(
+        onStart: () {
+          // La navegación al mapa se añadirá cuando exista
+          // la primera pantalla funcional del mundo.
+        },
+      ),
     );
   }
 }
