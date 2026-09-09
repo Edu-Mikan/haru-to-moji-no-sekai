@@ -7,14 +7,31 @@ void main() {
     return MaterialApp(home: HomeScreen(onStart: onStart));
   }
 
-  testWidgets('shows the principal home elements', (tester) async {
+  testWidgets('shows the home artwork and start button', (tester) async {
     await tester.pumpWidget(buildSubject());
 
-    expect(find.byKey(HomeScreen.titleKey), findsOneWidget);
+    await tester.pump();
 
-    expect(find.byKey(HomeScreen.heroPlaceholderKey), findsOneWidget);
+    expect(find.byKey(HomeScreen.heroImageKey), findsOneWidget);
 
     expect(find.byKey(HomeScreen.startButtonKey), findsOneWidget);
+
+    expect(
+      find.byKey(const ValueKey<String>('home-hero-placeholder')),
+      findsNothing,
+    );
+  });
+
+  testWidgets('uses the expected home artwork asset', (tester) async {
+    await tester.pumpWidget(buildSubject());
+
+    final image = tester.widget<Image>(find.byKey(HomeScreen.heroImageKey));
+
+    expect(image.image, isA<AssetImage>());
+
+    final assetImage = image.image as AssetImage;
+
+    expect(assetImage.assetName, HomeScreen.heroAssetPath);
   });
 
   testWidgets('invokes the start action when the button is pressed', (
@@ -37,7 +54,9 @@ void main() {
     expect(startRequested, isTrue);
   });
 
-  testWidgets('uses a compact layout on a phone-sized screen', (tester) async {
+  testWidgets('fits on a phone-sized screen without overflowing', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
 
@@ -46,12 +65,18 @@ void main() {
 
     await tester.pumpWidget(buildSubject());
 
+    await tester.pump();
+
     expect(tester.takeException(), isNull);
+
+    expect(find.byKey(HomeScreen.heroImageKey), findsOneWidget);
 
     expect(find.byKey(HomeScreen.startButtonKey), findsOneWidget);
   });
 
-  testWidgets('uses a wide layout without overflowing', (tester) async {
+  testWidgets('fits on a wide browser screen without overflowing', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1;
 
@@ -59,6 +84,28 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(buildSubject());
+
+    await tester.pump();
+
+    expect(tester.takeException(), isNull);
+
+    expect(find.byKey(HomeScreen.heroImageKey), findsOneWidget);
+
+    expect(find.byKey(HomeScreen.startButtonKey), findsOneWidget);
+  });
+
+  testWidgets('fits on a short landscape screen without overflowing', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(844, 390);
+    tester.view.devicePixelRatio = 1;
+
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(buildSubject());
+
+    await tester.pump();
 
     expect(tester.takeException(), isNull);
 

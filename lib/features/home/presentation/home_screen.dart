@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onStart});
 
-  static const Key titleKey = ValueKey<String>('home-title');
-  static const Key heroPlaceholderKey = ValueKey<String>(
-    'home-hero-placeholder',
-  );
+  static const String heroAssetPath = 'assets/branding/home/home_hero.png';
+
+  static const Key heroImageKey = ValueKey<String>('home-hero-image');
   static const Key startButtonKey = ValueKey<String>('home-start-button');
 
   final VoidCallback? onStart;
@@ -17,16 +16,15 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final isWide = constraints.maxWidth >= 700;
-
             return Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 960),
-                  child: isWide
-                      ? _WideHomeContent(onStart: onStart)
-                      : _CompactHomeContent(onStart: onStart),
+                  constraints: const BoxConstraints(maxWidth: 1100),
+                  child: _HomeContent(
+                    availableHeight: constraints.maxHeight,
+                    onStart: onStart,
+                  ),
                 ),
               ),
             );
@@ -37,111 +35,40 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _CompactHomeContent extends StatelessWidget {
-  const _CompactHomeContent({required this.onStart});
+class _HomeContent extends StatelessWidget {
+  const _HomeContent({required this.availableHeight, required this.onStart});
 
+  final double availableHeight;
   final VoidCallback? onStart;
 
   @override
   Widget build(BuildContext context) {
+    final maximumImageHeight = (availableHeight - 136).clamp(220.0, 720.0);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const _HomeHeroPlaceholder(),
-        const SizedBox(height: 32),
-        const _HomeTitle(),
-        const SizedBox(height: 32),
-        _StartButton(onPressed: onStart),
-      ],
-    );
-  }
-}
-
-class _WideHomeContent extends StatelessWidget {
-  const _WideHomeContent({required this.onStart});
-
-  final VoidCallback? onStart;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(flex: 3, child: _HomeHeroPlaceholder()),
-        const SizedBox(width: 48),
-        Expanded(
-          flex: 2,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const _HomeTitle(),
-              const SizedBox(height: 32),
-              _StartButton(onPressed: onStart),
-            ],
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: maximumImageHeight),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child: Image.asset(
+              HomeScreen.heroAssetPath,
+              key: HomeScreen.heroImageKey,
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.medium,
+              semanticLabel: 'はると文字の世界の紹介イラスト',
+            ),
           ),
         ),
+        const SizedBox(height: 24),
+        FilledButton.icon(
+          key: HomeScreen.startButtonKey,
+          onPressed: onStart,
+          icon: const Icon(Icons.play_arrow_rounded),
+          label: const Text('Empezar'),
+        ),
       ],
-    );
-  }
-}
-
-class _HomeHeroPlaceholder extends StatelessWidget {
-  const _HomeHeroPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      key: HomeScreen.heroPlaceholderKey,
-      aspectRatio: 4 / 3,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer
-              .withValues(alpha: 0.5),
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
-        ),
-        child: Icon(
-          Icons.landscape_rounded,
-          size: 96,
-          color: Theme.of(context).colorScheme.primary,
-          semanticLabel: 'Imagen de presentación provisional',
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeTitle extends StatelessWidget {
-  const _HomeTitle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      header: true,
-      child: Text(
-        'はるともじのせかい',
-        key: HomeScreen.titleKey,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headlineMedium,
-      ),
-    );
-  }
-}
-
-class _StartButton extends StatelessWidget {
-  const _StartButton({required this.onPressed});
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return FilledButton.icon(
-      key: HomeScreen.startButtonKey,
-      onPressed: onPressed,
-      icon: const Icon(Icons.play_arrow_rounded),
-      label: const Text('Empezar'),
     );
   }
 }
