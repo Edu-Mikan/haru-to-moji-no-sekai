@@ -22,8 +22,16 @@ void main() {
     );
   });
 
-  testWidgets('uses the expected home artwork asset', (tester) async {
+  testWidgets('uses the portrait artwork on a portrait screen', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await tester.pumpWidget(buildSubject());
+
+    await tester.pump();
 
     final image = tester.widget<Image>(find.byKey(HomeScreen.heroImageKey));
 
@@ -31,7 +39,29 @@ void main() {
 
     final assetImage = image.image as AssetImage;
 
-    expect(assetImage.assetName, HomeScreen.heroAssetPath);
+    expect(assetImage.assetName, HomeScreen.portraitHeroAssetPath);
+  });
+
+  testWidgets('uses the landscape artwork on a landscape screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1280, 800);
+    tester.view.devicePixelRatio = 1;
+
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(buildSubject());
+
+    await tester.pump();
+
+    final image = tester.widget<Image>(find.byKey(HomeScreen.heroImageKey));
+
+    expect(image.image, isA<AssetImage>());
+
+    final assetImage = image.image as AssetImage;
+
+    expect(assetImage.assetName, HomeScreen.landscapeHeroAssetPath);
   });
 
   testWidgets('invokes the start action when the button is pressed', (
@@ -110,5 +140,37 @@ void main() {
     expect(tester.takeException(), isNull);
 
     expect(find.byKey(HomeScreen.startButtonKey), findsOneWidget);
+  });
+
+  testWidgets('changes the artwork when the orientation changes', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(buildSubject());
+
+    await tester.pump();
+
+    var image = tester.widget<Image>(find.byKey(HomeScreen.heroImageKey));
+
+    expect(
+      (image.image as AssetImage).assetName,
+      HomeScreen.portraitHeroAssetPath,
+    );
+
+    tester.view.physicalSize = const Size(844, 390);
+
+    await tester.pumpAndSettle();
+
+    image = tester.widget<Image>(find.byKey(HomeScreen.heroImageKey));
+
+    expect(
+      (image.image as AssetImage).assetName,
+      HomeScreen.landscapeHeroAssetPath,
+    );
   });
 }

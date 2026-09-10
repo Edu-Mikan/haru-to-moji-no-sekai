@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onStart});
 
-  static const String heroAssetPath = 'assets/branding/home/home_hero.png';
+  static const String portraitHeroAssetPath =
+      'assets/branding/home/home_hero_portrait.png';
+
+  static const String landscapeHeroAssetPath =
+      'assets/branding/home/home_hero_landscape.png';
 
   static const Key heroImageKey = ValueKey<String>('home-hero-image');
   static const Key startButtonKey = ValueKey<String>('home-start-button');
@@ -43,7 +47,13 @@ class _HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maximumImageHeight = (availableHeight - 136).clamp(220.0, 720.0);
+    final orientation = MediaQuery.orientationOf(context);
+
+    final assetPath = orientation == Orientation.portrait
+        ? HomeScreen.portraitHeroAssetPath
+        : HomeScreen.landscapeHeroAssetPath;
+
+    final maximumImageHeight = (availableHeight - 112).clamp(260.0, 760.0);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -53,7 +63,7 @@ class _HomeContent extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(28),
             child: Image.asset(
-              HomeScreen.heroAssetPath,
+              assetPath,
               key: HomeScreen.heroImageKey,
               fit: BoxFit.contain,
               filterQuality: FilterQuality.medium,
@@ -61,7 +71,7 @@ class _HomeContent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 20),
         FilledButton.icon(
           key: HomeScreen.startButtonKey,
           onPressed: onStart,
