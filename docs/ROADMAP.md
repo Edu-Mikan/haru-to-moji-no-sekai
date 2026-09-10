@@ -133,3 +133,12 @@ lib/
 - [x] Integrar temporalmente la actividad después de Home.
 - [ ] Integrar la actividad como primera parada del mapa.
 ```
+
+## Flujo canónico del MVP
+
+```text
+Home
+→ mapa
+→ parada pedagógica
+→ pantalla de lectura o práctica
+```
