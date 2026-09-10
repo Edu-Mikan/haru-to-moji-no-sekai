@@ -142,3 +142,19 @@ Home
 → parada pedagógica
 → pantalla de lectura o práctica
 ```
+
+## Hito 6. Mapa mínimo
+
+- [ ] Elegir un único pack gráfico gratuito.
+- [x] Crear el contenedor Flutter de la pantalla del mapa.
+- [x] Integrar Flame mediante `GameWidget`.
+- [x] Mostrar una primera parada interactiva provisional.
+- [ ] Integrar `flame_tiled`.
+- [ ] Crear el mapa de vocales con Tiled.
+- [ ] Añadir nodos invisibles.
+- [ ] Añadir rutas prefijadas.
+- [ ] Añadir a はる.
+- [ ] Permitir el desplazamiento entre nodos.
+
+La primera parada Flame abre temporalmente la pantalla de lectura.
+Su posición será reemplazada por datos procedentes de Tiled.
