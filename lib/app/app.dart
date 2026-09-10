@@ -4,6 +4,7 @@ import '../features/home/presentation/home_screen.dart';
 import '../features/kana_learning/infrastructure/vowel_kana_catalog.dart';
 import '../features/kana_learning/presentation/kana_reading_screen.dart';
 import '../features/world_map/presentation/world_map_screen.dart';
+import '../features/kana_catalog/infrastructure/asset_kana_audio_player.dart';
 import 'app_theme.dart';
 
 class HaruToMojiNoSekaiApp extends StatelessWidget {
@@ -39,10 +40,7 @@ class _HomeNavigator extends StatelessWidget {
                       builder: (context) {
                         return KanaReadingScreen(
                           catalog: const VowelKanaCatalog(),
-                          onKanaSelected: (kana) {
-                            // La reproducción local se añadirá
-                            // cuando estén disponibles los audios.
-                          },
+                          audioPlayer: AssetKanaAudioPlayer(),
                           onContinue: () {
                             // El siguiente destino pedagógico
                             // se añadirá posteriormente.

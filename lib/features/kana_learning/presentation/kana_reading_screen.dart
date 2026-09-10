@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
+import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
 import '../domain/kana.dart';
 import '../domain/kana_catalog.dart';
@@ -7,21 +11,26 @@ import 'widgets/kana_button.dart';
 class KanaReadingScreen extends StatefulWidget {
   const KanaReadingScreen({
     required this.catalog,
+    required this.audioPlayer,
     super.key,
     this.onKanaSelected,
     this.onContinue,
   });
 
   static const Key screenKey = ValueKey<String>('kana-reading-screen');
+
   static const Key titleKey = ValueKey<String>('kana-reading-title');
+
   static const Key selectedKanaKey = ValueKey<String>(
     'kana-reading-selected-kana',
   );
+
   static const Key continueButtonKey = ValueKey<String>(
     'kana-reading-continue-button',
   );
 
   final KanaCatalog catalog;
+  final KanaAudioPlayer audioPlayer;
   final ValueChanged<Kana>? onKanaSelected;
   final VoidCallback? onContinue;
 
@@ -42,12 +51,26 @@ class _KanaReadingScreenState extends State<KanaReadingScreen> {
 
   Kana? _selectedKana;
 
-  void _selectKana(Kana kana) {
+  @override
+  void dispose() {
+    unawaited(widget.audioPlayer.dispose());
+    super.dispose();
+  }
+
+  Future<void> _selectKana(Kana kana) async {
     setState(() {
       _selectedKana = kana;
     });
 
     widget.onKanaSelected?.call(kana);
+
+    final audio = KanaAudio.fromCharacter(kana.character);
+
+    if (audio == null) {
+      return;
+    }
+
+    await widget.audioPlayer.play(audio);
   }
 
   @override
