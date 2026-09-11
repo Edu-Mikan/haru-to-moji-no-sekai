@@ -10,7 +10,7 @@ class VowelsWorldGame extends FlameGame {
 
   static const String mapFileName = 'vowels_world.tmx';
 
-  static const String mapPrefix = 'maps/vowels_world/';
+  static const String mapPrefix = 'assets/maps/vowels_world/';
 
   static const String stopsLayerName = 'stops';
 

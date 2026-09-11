@@ -56,12 +56,12 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
-
   assets:
     - assets/branding/home/
     - assets/audio/kana/
-    - assets/maps/vowels_world/
-    - assets/images/Tilemap/
+    - assets/maps/vowels_world/vowels_world.tmx
+    - assets/maps/vowels_world/tilesets/haru-tiny-town.tsx
+    - assets/images/tilesets/tilemap_packed.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
