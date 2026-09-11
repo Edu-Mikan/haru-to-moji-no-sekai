@@ -170,3 +170,15 @@ Su posición será reemplazada por datos procedentes de Tiled.
 - [ ] Preparar una versión final sin esquinas incrustadas para iOS.
 - [ ] Añadir una variante monocromática para iconos temáticos.
 ```
+
+## Navegación del mapa
+
+- [x] Definir un punto inicial para はる.
+- [x] Definir la primera ruta prefijada.
+- [x] Relacionar la ruta con la parada de lectura.
+- [ ] Leer puntos de aparición desde Dart.
+- [ ] Leer polilíneas desde Dart.
+- [ ] Crear el componente provisional de はる.
+- [ ] Desplazar a はる por la ruta.
+- [ ] Hacer que la cámara siga a はる.
+- [ ] Limitar la cámara a los bordes del mapa.
