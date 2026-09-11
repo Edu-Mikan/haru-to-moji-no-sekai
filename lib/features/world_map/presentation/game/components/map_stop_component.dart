@@ -10,6 +10,7 @@ class MapStopComponent extends CircleComponent with TapCallbacks {
     super.radius = 54,
   }) : super(
          anchor: Anchor.center,
+         priority: 10,
          paint: Paint()..color = const Color(0xFFF45B86),
        );
 
