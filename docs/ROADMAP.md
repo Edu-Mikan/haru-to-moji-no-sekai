@@ -158,3 +158,15 @@ Home
 
 La primera parada Flame abre temporalmente la pantalla de lectura.
 Su posición será reemplazada por datos procedentes de Tiled.
+
+```
+
+## Identidad visual
+
+- [x] Añadir un icono provisional para Android y web.
+- [x] Generar automáticamente los tamaños de launcher.
+- [ ] Preparar una versión simplificada del icono.
+- [ ] Separar fondo y primer plano para el icono adaptativo Android.
+- [ ] Preparar una versión final sin esquinas incrustadas para iOS.
+- [ ] Añadir una variante monocromática para iconos temáticos.
+```
