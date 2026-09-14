@@ -63,6 +63,7 @@ flutter:
     - assets/maps/vowels_world/tilesets/haru-tiny-town.tsx
     - assets/images/tilesets/tilemap_packed.png
     - assets/images/characters/haru/haru_running.png
+    - assets/branding/kana_reading/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

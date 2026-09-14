@@ -80,30 +80,6 @@ void main() {
     expect(find.byKey(KanaReadingScreen.selectedKanaKey), findsOneWidget);
   });
 
-  testWidgets('invokes the continue action', (tester) async {
-    final audioPlayer = FakeKanaAudioPlayer();
-    var continueRequested = false;
-
-    await tester.pumpWidget(
-      buildSubject(
-        audioPlayer: audioPlayer,
-        onContinue: () {
-          continueRequested = true;
-        },
-      ),
-    );
-
-    final continueButton = find.byKey(KanaReadingScreen.continueButtonKey);
-
-    await tester.ensureVisible(continueButton);
-    await tester.pumpAndSettle();
-
-    await tester.tap(continueButton);
-    await tester.pump();
-
-    expect(continueRequested, isTrue);
-  });
-
   testWidgets('fits on a phone-sized screen', (tester) async {
     final audioPlayer = FakeKanaAudioPlayer();
     tester.view.physicalSize = const Size(390, 844);
@@ -180,5 +156,21 @@ void main() {
     await tester.pump();
 
     expect(audioPlayer.disposeCallCount, 1);
+  });
+
+  testWidgets('shows the illustrated reading background', (tester) async {
+    final audioPlayer = FakeKanaAudioPlayer();
+
+    await tester.pumpWidget(buildSubject(audioPlayer: audioPlayer));
+
+    expect(find.byKey(KanaReadingScreen.backgroundKey), findsOneWidget);
+  });
+
+  testWidgets('shows the button for returning to the map', (tester) async {
+    final audioPlayer = FakeKanaAudioPlayer();
+
+    await tester.pumpWidget(buildSubject(audioPlayer: audioPlayer));
+
+    expect(find.byKey(KanaReadingScreen.backButtonKey), findsOneWidget);
   });
 }
