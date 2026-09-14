@@ -182,3 +182,5 @@ Su posición será reemplazada por datos procedentes de Tiled.
 - [ ] Desplazar a はる por la ruta.
 - [ ] Hacer que la cámara siga a はる.
 - [ ] Limitar la cámara a los bordes del mapa.
+- [ ] Ajustar la cámara para evitar mostrar el exterior del mapa en
+      pantallas con proporciones especialmente altas o anchas.
