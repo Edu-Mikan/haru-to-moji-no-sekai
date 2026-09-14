@@ -193,7 +193,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="13" name="Object Layer 3">
+ <objectgroup id="13" name="routes">
   <object id="6" name="route-start-to-reading" type="navigation-route" x="161.333" y="153.333">
    <properties>
     <property name="duration" type="float" value="3"/>
@@ -201,7 +201,7 @@
     <property name="id" value="route-start-to-reading"/>
     <property name="to" value="reading-vowels"/>
    </properties>
-   <polyline points="0,0 1.33333,252 156,321.333"/>
+   <polyline points="-1.18182,0.181818 1.33333,252 158.667,326.667"/>
   </object>
  </objectgroup>
  <objectgroup id="11" name="stops">
