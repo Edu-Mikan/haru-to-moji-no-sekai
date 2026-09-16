@@ -109,7 +109,7 @@ class VowelsWorldGame extends FlameGame {
 
     await world.add(
       MapStopComponent(
-        label: readingStop.properties.getValue<String>('label') ?? 'Vocales',
+        character: 'あ',
         position: Vector2(readingStop.x, readingStop.y),
         onSelected: () {
           _openReadingStop(routePoints: routePoints, duration: routeDuration);

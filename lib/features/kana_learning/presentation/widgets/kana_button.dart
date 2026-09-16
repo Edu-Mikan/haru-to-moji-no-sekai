@@ -39,7 +39,7 @@ class KanaButton extends StatelessWidget {
       label: 'Reproducir el sonido ${kana.reading}',
       child: Transform.rotate(
         angle: rotation * math.pi / 180,
-        filterQuality: FilterQuality.none,
+        filterQuality: FilterQuality.low,
         child: AnimatedScale(
           scale: isSelected ? 1.08 : 1,
           duration: const Duration(milliseconds: 180),
@@ -62,7 +62,7 @@ class KanaButton extends StatelessWidget {
                       fit: BoxFit.contain,
                       color: color,
                       colorBlendMode: BlendMode.modulate,
-                      filterQuality: FilterQuality.none,
+                      filterQuality: FilterQuality.low,
                       isAntiAlias: false,
                     ),
                     Padding(

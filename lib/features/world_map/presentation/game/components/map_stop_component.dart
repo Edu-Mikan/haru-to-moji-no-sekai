@@ -2,39 +2,58 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-class MapStopComponent extends CircleComponent with TapCallbacks {
+class MapStopComponent extends PositionComponent with TapCallbacks {
   MapStopComponent({
-    required this.label,
+    required this.character,
     required this.onSelected,
     required super.position,
-    super.radius = 54,
+    Vector2? size,
   }) : super(
+         size: size ?? Vector2.all(88),
          anchor: Anchor.center,
          priority: 10,
-         paint: Paint()..color = const Color(0xFFF45B86),
        );
 
-  final String label;
+  static const String spriteAssetPath = 'map/stops/reading_vowels.png';
+
+  final String character;
   final VoidCallback onSelected;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    add(
+    final sprite = await Sprite.load(spriteAssetPath);
+
+    await addAll([
+      SpriteComponent(
+        sprite: sprite,
+        size: size,
+        anchor: Anchor.topLeft,
+        position: Vector2.zero(),
+      ),
       TextComponent(
-        text: label,
+        text: character,
         anchor: Anchor.center,
-        position: size / 2,
+        position: Vector2(size.x / 2, size.y * 0.57),
+        priority: 1,
         textRenderer: TextPaint(
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
+          style: TextStyle(
+            color: const Color(0xFFFFF8E8),
+            fontSize: size.x * 0.45,
+            fontWeight: FontWeight.w900,
+            height: 1,
+            shadows: const [
+              Shadow(
+                color: Color(0x55000000),
+                offset: Offset(0, 3),
+                blurRadius: 3,
+              ),
+            ],
           ),
         ),
       ),
-    );
+    ]);
   }
 
   @override
