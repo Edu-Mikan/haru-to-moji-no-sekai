@@ -2,25 +2,78 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
-class AssetKanaAudioPlayer implements KanaAudioPlayer {
-  AssetKanaAudioPlayer({AudioPlayer? player})
-    : _player = player ?? AudioPlayer();
+typedef KanaAssetsPreloader = Future<void> Function(List<String> assetPaths);
 
-  final AudioPlayer _player;
+class AssetKanaAudioPlayer implements KanaAudioPlayer {
+  factory AssetKanaAudioPlayer({
+    AudioPlayer? player,
+    KanaAssetsPreloader? preloader,
+  }) {
+    return AssetKanaAudioPlayer._(player, preloader ?? _preloadAssets);
+  }
+
+  AssetKanaAudioPlayer._(this._player, this._preloader);
+
+  AudioPlayer? _player;
+
+  final KanaAssetsPreloader _preloader;
+  final Set<String> _preloadedAssetPaths = {};
+
+  AudioPlayer get _activePlayer {
+    return _player ??= AudioPlayer();
+  }
+
+  static Future<void> _preloadAssets(List<String> assetPaths) async {
+    final cache = AudioCache(prefix: 'assets/');
+
+    await cache.loadAll(assetPaths);
+  }
+
+  @override
+  Future<void> preload(Iterable<KanaAudio> audios) async {
+    final pendingAssetPaths = audios
+        .map((audio) => audio.assetPath)
+        .where((assetPath) => !_preloadedAssetPaths.contains(assetPath))
+        .toList(growable: false);
+
+    if (pendingAssetPaths.isEmpty) {
+      return;
+    }
+
+    await _preloader(pendingAssetPaths);
+
+    _preloadedAssetPaths.addAll(pendingAssetPaths);
+  }
 
   @override
   Future<void> play(KanaAudio audio) async {
-    await _player.stop();
-    await _player.play(AssetSource(audio.assetPath));
+    final player = _activePlayer;
+
+    await player.stop();
+    await player.play(AssetSource(audio.assetPath));
   }
 
   @override
-  Future<void> stop() {
-    return _player.stop();
+  Future<void> stop() async {
+    final player = _player;
+
+    if (player == null) {
+      return;
+    }
+
+    await player.stop();
   }
 
   @override
-  Future<void> dispose() {
-    return _player.dispose();
+  Future<void> dispose() async {
+    final player = _player;
+
+    if (player == null) {
+      return;
+    }
+
+    _player = null;
+
+    await player.dispose();
   }
 }

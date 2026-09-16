@@ -8,10 +8,16 @@ import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.da
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
 class FakeKanaAudioPlayer implements KanaAudioPlayer {
+  final List<KanaAudio> preloadedAudios = [];
   final List<KanaAudio> playedAudios = [];
 
   var stopCallCount = 0;
   var disposeCallCount = 0;
+
+  @override
+  Future<void> preload(Iterable<KanaAudio> audios) async {
+    preloadedAudios.addAll(audios);
+  }
 
   @override
   Future<void> play(KanaAudio audio) async {
@@ -144,7 +150,7 @@ void main() {
 
     expect(audioPlayer.playedAudios, [KanaAudio.a, KanaAudio.i]);
   });
-  testWidgets('disposes the audio player when the screen is removed', (
+  testWidgets('does not dispose the shared audio player when removed', (
     tester,
   ) async {
     final audioPlayer = FakeKanaAudioPlayer();
@@ -155,7 +161,7 @@ void main() {
 
     await tester.pump();
 
-    expect(audioPlayer.disposeCallCount, 1);
+    expect(audioPlayer.disposeCallCount, 0);
   });
 
   testWidgets('shows the illustrated reading background', (tester) async {

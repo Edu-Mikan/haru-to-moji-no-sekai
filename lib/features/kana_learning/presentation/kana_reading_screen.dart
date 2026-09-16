@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
@@ -67,12 +65,6 @@ class _KanaReadingScreenState extends State<KanaReadingScreen> {
   ];
 
   Kana? _selectedKana;
-
-  @override
-  void dispose() {
-    unawaited(widget.audioPlayer.dispose());
-    super.dispose();
-  }
 
   Future<void> _selectKana(Kana kana) async {
     setState(() {
