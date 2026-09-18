@@ -36,7 +36,7 @@ class WorldMapScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Text(
-                    'No se pudo cargar el mapa.',
+                    'No se pudo cargar el mapa. \n$error',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),

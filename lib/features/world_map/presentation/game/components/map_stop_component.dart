@@ -9,7 +9,7 @@ class MapStopComponent extends PositionComponent with TapCallbacks {
     required super.position,
     Vector2? size,
   }) : super(
-         size: size ?? Vector2.all(88),
+         size: size ?? Vector2.all(64),
          anchor: Anchor.center,
          priority: 10,
        );

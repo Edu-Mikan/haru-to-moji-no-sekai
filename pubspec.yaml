@@ -61,7 +61,17 @@ flutter:
     - assets/audio/kana/
     - assets/maps/vowels_world/vowels_world.tmx
     - assets/maps/vowels_world/tilesets/haru-tiny-town.tsx
+    - assets/maps/vowels_world/tilesets/pipo-map001.tsx
+    - assets/maps/vowels_world/tilesets/pipo-map001_at.tsx
+    - assets/maps/vowels_world/tilesets/CGS_RuralB.tsx
+    - assets/maps/vowels_world/tilesets/CGS_RuralCSpr.tsx
+
     - assets/images/tilesets/tilemap_packed.png
+    - assets/images/tilesets/pipo-map001.png
+    - assets/images/tilesets/pipo-map001_at.png
+    - assets/images/tilesets/CGS_RuralB.png
+    - assets/images/tilesets/CGS_RuralCSpr.png
+
     - assets/images/characters/haru/haru_running.png
     - assets/branding/kana_reading/
     - assets/images/map/stops/reading_vowels.png
