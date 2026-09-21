@@ -12,13 +12,7 @@ import 'components/haru_component.dart';
 import 'components/map_stop_component.dart';
 
 class VowelsWorldGame extends FlameGame {
-  VowelsWorldGame({required this.onOpenReadingStop})
-    : super(
-        camera: CameraComponent.withFixedResolution(
-          width: viewportWidth,
-          height: viewportHeight,
-        ),
-      );
+  VowelsWorldGame({required this.onOpenReadingStop}) : super();
 
   static const String mapFileName = 'vowels_world.tmx';
   static const String mapPrefix = 'assets/maps/vowels_world/';
@@ -32,8 +26,6 @@ class VowelsWorldGame extends FlameGame {
   static const String readingRouteId = 'route-start-to-reading';
 
   static const double tileSize = 48;
-  static const double viewportWidth = 360;
-  static const double viewportHeight = 640;
   static const double stopSizeMultiplier = 1.3;
 
   final VoidCallback onOpenReadingStop;
@@ -113,19 +105,21 @@ class VowelsWorldGame extends FlameGame {
 
     await world.add(_haru);
 
-    const halfViewportWidth = viewportWidth / 2;
-    const halfViewportHeight = viewportHeight / 2;
+    camera.viewfinder.anchor = Anchor.center;
+    camera.viewfinder.zoom = 1.75;
 
-    camera.viewfinder
-      ..anchor = Anchor.center
-      ..position = Vector2(halfViewportWidth, halfViewportHeight);
+    await Future.delayed(Duration.zero);
+
+    final halfVisibleWidth = size.x / camera.viewfinder.zoom / 2;
+
+    final halfVisibleHeight = size.y / camera.viewfinder.zoom / 2;
 
     camera.setBounds(
       Rectangle.fromLTRB(
-        halfViewportWidth,
-        halfViewportHeight,
-        mapWidth - halfViewportWidth,
-        mapHeight - halfViewportHeight,
+        halfVisibleWidth,
+        halfVisibleHeight,
+        mapWidth.toDouble() - halfVisibleWidth,
+        mapHeight.toDouble() - halfVisibleHeight,
       ),
     );
 

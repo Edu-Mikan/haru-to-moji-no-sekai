@@ -1,9 +1,9 @@
 enum KanaAudio {
-  a(character: 'あ', romanization: 'a', assetPath: 'audio/kana/a.m4a'),
-  i(character: 'い', romanization: 'i', assetPath: 'audio/kana/i.m4a'),
-  u(character: 'う', romanization: 'u', assetPath: 'audio/kana/u.m4a'),
-  e(character: 'え', romanization: 'e', assetPath: 'audio/kana/e.m4a'),
-  o(character: 'お', romanization: 'o', assetPath: 'audio/kana/o.m4a');
+  a(character: 'あ', romanization: 'a', assetPath: 'audio/kana/a.wav'),
+  i(character: 'い', romanization: 'i', assetPath: 'audio/kana/i.wav'),
+  u(character: 'う', romanization: 'u', assetPath: 'audio/kana/u.wav'),
+  e(character: 'え', romanization: 'e', assetPath: 'audio/kana/e.wav'),
+  o(character: 'お', romanization: 'o', assetPath: 'audio/kana/o.wav');
 
   const KanaAudio({
     required this.character,

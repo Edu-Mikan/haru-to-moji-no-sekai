@@ -19,11 +19,11 @@ void main() {
     expect(preloadCalls, hasLength(1));
 
     expect(preloadCalls.single, [
-      'audio/kana/a.m4a',
-      'audio/kana/i.m4a',
-      'audio/kana/u.m4a',
-      'audio/kana/e.m4a',
-      'audio/kana/o.m4a',
+      'audio/kana/a.wav',
+      'audio/kana/i.wav',
+      'audio/kana/u.wav',
+      'audio/kana/e.wav',
+      'audio/kana/o.wav',
     ]);
   });
 
