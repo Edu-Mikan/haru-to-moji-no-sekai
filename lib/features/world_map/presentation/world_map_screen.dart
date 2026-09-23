@@ -1,16 +1,17 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
+import '../domain/map_constants.dart';
 import 'game/vowels_world_game.dart';
 
 class WorldMapScreen extends StatelessWidget {
-  const WorldMapScreen({super.key, this.onOpenFirstStop});
+  const WorldMapScreen({super.key, this.onOpenLesson});
 
   static const Key screenKey = ValueKey<String>('world-map-screen');
 
   static const Key gameWidgetKey = ValueKey<String>('world-map-game-widget');
 
-  final VoidCallback? onOpenFirstStop;
+  final ValueChanged<String>? onOpenLesson;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,22 @@ class WorldMapScreen extends StatelessWidget {
             key: gameWidgetKey,
             gameFactory: () {
               return VowelsWorldGame(
-                onOpenReadingStop: () {
-                  onOpenFirstStop?.call();
+                onOpenActivity: (request) {
+                  if (request.activity == StopActivities.kanaReading) {
+                    debugPrint('Lesson requested: ${request.lesson}');
+                    switch (request.lesson) {
+                      case Lessons.aiueo:
+                        onOpenLesson?.call(request.lesson);
+                        break;
+
+                      case Lessons.kakikukeko:
+                        onOpenLesson?.call(request.lesson);
+                        break;
+
+                      default:
+                        onOpenLesson?.call(request.lesson);
+                    }
+                  }
                 },
               );
             },

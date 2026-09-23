@@ -6,8 +6,12 @@ import '../features/home/presentation/home_screen.dart';
 import '../features/kana_catalog/domain/kana_audio.dart';
 import '../features/kana_catalog/domain/kana_audio_player.dart';
 import '../features/kana_catalog/infrastructure/asset_kana_audio_player.dart';
+import '../features/kana_learning/domain/kana_catalog.dart';
+import '../features/kana_learning/domain/kana_lessons.dart';
 import '../features/kana_learning/infrastructure/vowel_kana_catalog.dart';
+import '../features/kana_learning/infrastructure/kakikukeko_kana_catalog.dart';
 import '../features/kana_learning/presentation/kana_reading_screen.dart';
+import '../features/world_map/domain/map_constants.dart';
 import '../features/world_map/presentation/world_map_screen.dart';
 import 'app_theme.dart';
 
@@ -73,6 +77,19 @@ class _HomeNavigator extends StatelessWidget {
 
   final KanaAudioPlayer audioPlayer;
 
+  KanaCatalog _catalogForLesson(String lesson) {
+    switch (lesson) {
+      case Lessons.aiueo:
+        return const VowelKanaCatalog();
+
+      case Lessons.kakikukeko:
+        return const KakikukekoKanaCatalog();
+
+      default:
+        return const VowelKanaCatalog();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return HomeScreen(
@@ -81,17 +98,17 @@ class _HomeNavigator extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (context) {
               return WorldMapScreen(
-                onOpenFirstStop: () {
+                onOpenLesson: (lessonId) {
+                  final catalog = _catalogForLesson(lessonId);
+                  final lesson = KanaLessons.byId(lessonId);
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (context) {
                         return KanaReadingScreen(
-                          catalog: const VowelKanaCatalog(),
+                          lesson: lesson,
+                          catalog: catalog,
                           audioPlayer: audioPlayer,
-                          onContinue: () {
-                            // El siguiente destino pedagógico
-                            // se añadirá posteriormente.
-                          },
+                          onContinue: () {},
                         );
                       },
                     ),

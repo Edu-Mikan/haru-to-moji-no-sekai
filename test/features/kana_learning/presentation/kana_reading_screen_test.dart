@@ -6,6 +6,7 @@ import 'package:haru_to_moji_no_sekai/features/kana_learning/presentation/kana_r
 import 'package:haru_to_moji_no_sekai/features/kana_learning/presentation/widgets/kana_button.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
+import 'package:haru_to_moji_no_sekai/features/kana_learning/domain/kana_lessons.dart';
 
 class FakeKanaAudioPlayer implements KanaAudioPlayer {
   final List<KanaAudio> preloadedAudios = [];
@@ -45,6 +46,7 @@ void main() {
   }) {
     return MaterialApp(
       home: KanaReadingScreen(
+        lesson: KanaLessons.aiueo,
         catalog: catalog,
         audioPlayer: audioPlayer,
         onKanaSelected: onKanaSelected,

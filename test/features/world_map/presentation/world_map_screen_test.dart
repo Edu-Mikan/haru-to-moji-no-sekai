@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:haru_to_moji_no_sekai/features/world_map/presentation/world_map_screen.dart';
 
 void main() {
-  Widget buildSubject({VoidCallback? onOpenFirstStop}) {
-    return MaterialApp(home: WorldMapScreen(onOpenFirstStop: onOpenFirstStop));
+  Widget buildSubject({ValueChanged<String>? onOpenLesson}) {
+    return MaterialApp(home: WorldMapScreen(onOpenLesson: onOpenLesson));
   }
 
   testWidgets('shows the Flame world map', (tester) async {

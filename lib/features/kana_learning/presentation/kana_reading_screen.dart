@@ -4,6 +4,7 @@ import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_pl
 
 import '../domain/kana.dart';
 import '../domain/kana_catalog.dart';
+import '../domain/kana_lesson.dart';
 import 'widgets/kana_button.dart';
 
 class KanaReadingScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class KanaReadingScreen extends StatefulWidget {
     super.key,
     this.onKanaSelected,
     this.onContinue,
+    required this.lesson,
   });
 
   static const Key screenKey = ValueKey<String>('kana-reading-screen');
@@ -35,6 +37,7 @@ class KanaReadingScreen extends StatefulWidget {
   final KanaAudioPlayer audioPlayer;
   final ValueChanged<Kana>? onKanaSelected;
   final VoidCallback? onContinue;
+  final KanaLesson lesson;
 
   @override
   State<KanaReadingScreen> createState() {
@@ -43,9 +46,6 @@ class KanaReadingScreen extends StatefulWidget {
 }
 
 class _KanaReadingScreenState extends State<KanaReadingScreen> {
-  static const String _backgroundAssetPath =
-      'assets/branding/kana_reading/kana_reading_background.png';
-
   static const List<Color> _buttonColors = [
     Color(0xFFF4515F),
     Color(0xFFFFB916),
@@ -113,7 +113,7 @@ class _KanaReadingScreenState extends State<KanaReadingScreen> {
                   children: [
                     Positioned.fill(
                       child: Image.asset(
-                        _backgroundAssetPath,
+                        widget.lesson.backgroundAsset,
                         key: KanaReadingScreen.backgroundKey,
                         fit: BoxFit.cover,
                         filterQuality: FilterQuality.high,
