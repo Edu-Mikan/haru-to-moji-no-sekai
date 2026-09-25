@@ -2,24 +2,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:haru_to_moji_no_sekai/app/app.dart';
 import 'package:haru_to_moji_no_sekai/features/home/presentation/home_screen.dart';
 import 'package:haru_to_moji_no_sekai/features/world_map/presentation/world_map_screen.dart';
-import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
 class FakeKanaAudioPlayer implements KanaAudioPlayer {
-  final List<KanaAudio> preloadedAudios = [];
-  final List<KanaAudio> playedAudios = [];
+  final List<String> preloadedAssets = [];
+  final List<String> playedAssets = [];
 
   var stopCallCount = 0;
   var disposeCallCount = 0;
 
   @override
-  Future<void> preload(Iterable<KanaAudio> audios) async {
-    preloadedAudios.addAll(audios);
+  Future<void> preload(Iterable<String> assetPaths) async {
+    preloadedAssets.addAll(assetPaths);
   }
 
   @override
-  Future<void> play(KanaAudio audio) async {
-    playedAudios.add(audio);
+  Future<void> playAsset(String assetPath) async {
+    playedAssets.add(assetPath);
   }
 
   @override
@@ -74,7 +73,13 @@ void main() {
 
     await tester.pump();
 
-    expect(audioPlayer.preloadedAudios, KanaAudio.values);
+    expect(audioPlayer.preloadedAssets, [
+      'audio/kana/a.wav',
+      'audio/kana/i.wav',
+      'audio/kana/u.wav',
+      'audio/kana/e.wav',
+      'audio/kana/o.wav',
+    ]);
 
     expect(find.byType(HomeScreen), findsOneWidget);
   });

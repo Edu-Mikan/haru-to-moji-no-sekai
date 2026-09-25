@@ -13,6 +13,12 @@ class KanaLessons {
     kana: ['か', 'き', 'く', 'け', 'こ'],
   );
 
+  static const sasisuseso = KanaLesson(
+    id: 'sasisuseso',
+    backgroundAsset: 'assets/branding/kana_reading/parque_background.png',
+    kana: ['さ', 'し', 'す', 'せ', 'そ'],
+  );
+
   static KanaLesson byId(String id) {
     switch (id) {
       case 'aiueo':
@@ -20,6 +26,9 @@ class KanaLessons {
 
       case 'kakikukeko':
         return kakikukeko;
+
+      case 'sasisuseso':
+        return sasisuseso;
 
       default:
         throw ArgumentError('Unknown lesson: $id');

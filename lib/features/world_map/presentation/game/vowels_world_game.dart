@@ -121,7 +121,11 @@ class VowelsWorldGame extends FlameGame {
     await world.add(_haru);
 
     camera.viewfinder.anchor = Anchor.center;
-    camera.viewfinder.zoom = 1.75;
+    const visibleTilesHigh = 10.0;
+
+    final zoom = size.y / (visibleTilesHigh * tileSize);
+
+    camera.viewfinder.zoom = zoom.clamp(0.75, 3.0);
 
     await Future.delayed(Duration.zero);
 

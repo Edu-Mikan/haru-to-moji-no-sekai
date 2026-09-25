@@ -1,5 +1,4 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
 typedef KanaAssetsPreloader = Future<void> Function(List<String> assetPaths);
@@ -30,9 +29,8 @@ class AssetKanaAudioPlayer implements KanaAudioPlayer {
   }
 
   @override
-  Future<void> preload(Iterable<KanaAudio> audios) async {
-    final pendingAssetPaths = audios
-        .map((audio) => audio.assetPath)
+  Future<void> preload(Iterable<String> assetPaths) async {
+    final pendingAssetPaths = assetPaths
         .where((assetPath) => !_preloadedAssetPaths.contains(assetPath))
         .toList(growable: false);
 
@@ -46,11 +44,11 @@ class AssetKanaAudioPlayer implements KanaAudioPlayer {
   }
 
   @override
-  Future<void> play(KanaAudio audio) async {
+  Future<void> playAsset(String assetPath) async {
     final player = _activePlayer;
 
     await player.stop();
-    await player.play(AssetSource(audio.assetPath));
+    await player.play(AssetSource(assetPath));
   }
 
   @override

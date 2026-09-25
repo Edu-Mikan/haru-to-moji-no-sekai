@@ -4,25 +4,24 @@ import 'package:haru_to_moji_no_sekai/features/kana_learning/domain/kana.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_learning/infrastructure/vowel_kana_catalog.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_learning/presentation/kana_reading_screen.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_learning/presentation/widgets/kana_button.dart';
-import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_learning/domain/kana_lessons.dart';
 
 class FakeKanaAudioPlayer implements KanaAudioPlayer {
-  final List<KanaAudio> preloadedAudios = [];
-  final List<KanaAudio> playedAudios = [];
+  final List<String> preloadedAssets = [];
+  final List<String> playedAssets = [];
 
   var stopCallCount = 0;
   var disposeCallCount = 0;
 
   @override
-  Future<void> preload(Iterable<KanaAudio> audios) async {
-    preloadedAudios.addAll(audios);
+  Future<void> preload(Iterable<String> assetPaths) async {
+    preloadedAssets.addAll(assetPaths);
   }
 
   @override
-  Future<void> play(KanaAudio audio) async {
-    playedAudios.add(audio);
+  Future<void> playAsset(String assetPath) async {
+    playedAssets.add(assetPath);
   }
 
   @override
@@ -133,9 +132,7 @@ void main() {
 
     await tester.pump();
 
-    expect(audioPlayer.playedAudios, [KanaAudio.a]);
-
-    expect(audioPlayer.playedAudios.single.assetPath, 'audio/kana/a.m4a');
+    expect(audioPlayer.playedAssets, ['audio/kana/a.wav']);
   });
   testWidgets('plays the most recently selected kana', (tester) async {
     final audioPlayer = FakeKanaAudioPlayer();
@@ -150,7 +147,7 @@ void main() {
 
     await tester.pump();
 
-    expect(audioPlayer.playedAudios, [KanaAudio.a, KanaAudio.i]);
+    expect(audioPlayer.playedAssets, ['audio/kana/a.wav', 'audio/kana/i.wav']);
   });
   testWidgets('does not dispose the shared audio player when removed', (
     tester,

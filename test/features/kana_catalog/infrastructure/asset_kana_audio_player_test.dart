@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/infrastructure/asset_kana_audio_player.dart';
 
 void main() {
@@ -14,7 +13,13 @@ void main() {
       },
     );
 
-    await audioPlayer.preload(KanaAudio.values);
+    await audioPlayer.preload([
+      'audio/kana/a.wav',
+      'audio/kana/i.wav',
+      'audio/kana/u.wav',
+      'audio/kana/e.wav',
+      'audio/kana/o.wav',
+    ]);
 
     expect(preloadCalls, hasLength(1));
 
@@ -36,9 +41,16 @@ void main() {
       },
     );
 
-    await audioPlayer.preload(KanaAudio.values);
+    const assets = [
+      'audio/kana/a.wav',
+      'audio/kana/i.wav',
+      'audio/kana/u.wav',
+      'audio/kana/e.wav',
+      'audio/kana/o.wav',
+    ];
 
-    await audioPlayer.preload(KanaAudio.values);
+    await audioPlayer.preload(assets);
+    await audioPlayer.preload(assets);
 
     expect(preloadCalls, hasLength(1));
   });
@@ -52,15 +64,15 @@ void main() {
       },
     );
 
-    await audioPlayer.preload([KanaAudio.a, KanaAudio.i]);
+    await audioPlayer.preload(['audio/kana/a.wav', 'audio/kana/i.wav']);
 
-    await audioPlayer.preload([KanaAudio.i, KanaAudio.u]);
+    await audioPlayer.preload(['audio/kana/i.wav', 'audio/kana/u.wav']);
 
     expect(preloadCalls, hasLength(2));
 
-    expect(preloadCalls.first, ['audio/kana/a.m4a', 'audio/kana/i.m4a']);
+    expect(preloadCalls.first, ['audio/kana/a.wav', 'audio/kana/i.wav']);
 
-    expect(preloadCalls.last, ['audio/kana/u.m4a']);
+    expect(preloadCalls.last, ['audio/kana/u.wav']);
   });
 
   test('retries assets when preloading fails', () async {
@@ -76,9 +88,12 @@ void main() {
       },
     );
 
-    await expectLater(audioPlayer.preload([KanaAudio.a]), throwsStateError);
+    await expectLater(
+      audioPlayer.preload(['audio/kana/a.wav']),
+      throwsStateError,
+    );
 
-    await audioPlayer.preload([KanaAudio.a]);
+    await audioPlayer.preload(['audio/kana/a.wav']);
 
     expect(attemptCount, 2);
   });

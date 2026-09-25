@@ -10,4 +10,5 @@ class Lessons {
   static const aiueo = 'aiueo';
 
   static const kakikukeko = 'kakikukeko';
+  static const sasisuseso = 'sasisuseso';
 }

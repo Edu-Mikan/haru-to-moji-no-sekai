@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../features/home/presentation/home_screen.dart';
-import '../features/kana_catalog/domain/kana_audio.dart';
 import '../features/kana_catalog/domain/kana_audio_player.dart';
 import '../features/kana_catalog/infrastructure/asset_kana_audio_player.dart';
 import '../features/kana_learning/domain/kana_catalog.dart';
 import '../features/kana_learning/domain/kana_lessons.dart';
 import '../features/kana_learning/infrastructure/vowel_kana_catalog.dart';
 import '../features/kana_learning/infrastructure/kakikukeko_kana_catalog.dart';
+import '../features/kana_learning/infrastructure/sasisuseso_kana_catalog.dart';
 import '../features/kana_learning/presentation/kana_reading_screen.dart';
 import '../features/world_map/domain/map_constants.dart';
 import '../features/world_map/presentation/world_map_screen.dart';
@@ -44,7 +44,13 @@ class _HaruToMojiNoSekaiAppState extends State<HaruToMojiNoSekaiApp> {
 
   Future<void> _preloadKanaAudio() async {
     try {
-      await _audioPlayer.preload(KanaAudio.values);
+      await _audioPlayer.preload([
+        'audio/kana/a.wav',
+        'audio/kana/i.wav',
+        'audio/kana/u.wav',
+        'audio/kana/e.wav',
+        'audio/kana/o.wav',
+      ]);
     } on Object {
       // La precarga es una optimización.
       // La reproducción normal volverá a intentar cargar
@@ -84,6 +90,9 @@ class _HomeNavigator extends StatelessWidget {
 
       case Lessons.kakikukeko:
         return const KakikukekoKanaCatalog();
+
+      case Lessons.sasisuseso:
+        return const SasisusesoKanaCatalog();
 
       default:
         return const VowelKanaCatalog();

@@ -14,6 +14,7 @@ class Kana {
   final String reading;
   final KanaScript script;
   final int order;
+  String get audioAssetPath => 'audio/kana/$reading.wav';
 
   @override
   bool operator ==(Object other) {

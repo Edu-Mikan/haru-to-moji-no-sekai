@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio.dart';
 import 'package:haru_to_moji_no_sekai/features/kana_catalog/domain/kana_audio_player.dart';
 
 import '../domain/kana.dart';
@@ -73,13 +72,7 @@ class _KanaReadingScreenState extends State<KanaReadingScreen> {
 
     widget.onKanaSelected?.call(kana);
 
-    final audio = KanaAudio.fromCharacter(kana.character);
-
-    if (audio == null) {
-      return;
-    }
-
-    await widget.audioPlayer.play(audio);
+    await widget.audioPlayer.playAsset(kana.audioAssetPath);
   }
 
   Future<void> _returnToMap() async {
